@@ -3,579 +3,975 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Darrel Burke | Official Website</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+<title>Darrel Burke | Official</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --red: #E8200A;
-    --dark-red: #b01a08;
-    --black: #111111;
-    --off-black: #1a1a1a;
-    --yellow: #FFD100;
-    --gray: #888;
-  }
+:root {
+  --red:    #D4220E;
+  --red2:   #ff3a1f;
+  --gold:   #C9A84C;
+  --gold2:  #e8c96a;
+  --black:  #0c0c0c;
+  --deep:   #080808;
+  --panel:  #111111;
+  --border: rgba(255,255,255,0.07);
+  --muted:  rgba(255,255,255,0.4);
+  --text:   rgba(255,255,255,0.82);
+}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; font-size:16px; }
 
-  body {
-    font-family: 'Barlow', sans-serif;
-    background: var(--black);
-    color: white;
-    overflow-x: hidden;
-  }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--black);
+  color: var(--text);
+  overflow-x: hidden;
+  cursor: default;
+}
 
-  /* ── NAV ── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 18px 48px;
-    background: rgba(17,17,17,0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-  }
+/* ─── GRAIN OVERLAY ─── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 200px;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.5;
+}
 
-  .nav-logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.8rem;
-    letter-spacing: 2px;
-    color: var(--yellow);
-  }
+/* ─── SCROLL ANIMATIONS ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.visible { opacity:1; transform:translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.35s; }
+.reveal-delay-4 { transition-delay: 0.5s; }
 
-  .nav-links { display: flex; gap: 36px; }
-  .nav-links a {
-    color: rgba(255,255,255,0.7);
-    text-decoration: none;
-    font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--yellow); }
+/* ─── NAV ─── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 500;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 60px;
+  transition: background 0.4s, padding 0.4s;
+}
+nav.scrolled {
+  background: rgba(8,8,8,0.97);
+  backdrop-filter: blur(20px);
+  padding: 14px 60px;
+  border-bottom: 1px solid var(--border);
+}
 
-  /* ── HERO ── */
-  #home {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    background: var(--black);
-  }
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 1.25rem;
+  letter-spacing: 0.5px;
+  color: white;
+}
+.nav-logo span { color: var(--gold); }
 
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 80% 60% at 60% 50%, rgba(232,32,10,0.18) 0%, transparent 70%),
-      repeating-linear-gradient(45deg, transparent, transparent 60px, rgba(255,255,255,0.015) 60px, rgba(255,255,255,0.015) 61px);
-  }
+.nav-links { display: flex; gap: 40px; align-items: center; }
+.nav-links a {
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  transition: color 0.2s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -3px; left: 0;
+  width: 0; height: 1px;
+  background: var(--gold);
+  transition: width 0.25s;
+}
+.nav-links a:hover { color: white; }
+.nav-links a:hover::after { width: 100%; }
 
-  .hero-content {
-    position: relative;
-    text-align: center;
-    padding: 0 24px;
-    animation: fadeUp 0.8s ease both;
-  }
+/* ─── HERO ─── */
+#home {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  position: relative;
+  overflow: hidden;
+  background: var(--deep);
+}
 
-  .hero-tag {
-    display: inline-block;
-    background: var(--yellow);
-    color: var(--black);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    padding: 6px 18px;
-    border-radius: 2px;
-    margin-bottom: 28px;
-  }
+/* Layered background */
+.hero-layers {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.hero-layers .hl-1 {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 80% at 50% 60%, rgba(212,34,14,0.12) 0%, transparent 65%);
+}
+.hero-layers .hl-2 {
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 80px,
+      rgba(255,255,255,0.018) 80px,
+      rgba(255,255,255,0.018) 81px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 80px,
+      rgba(255,255,255,0.018) 80px,
+      rgba(255,255,255,0.018) 81px
+    );
+}
+.hero-layers .hl-3 {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 40%;
+  background: linear-gradient(to top, var(--black), transparent);
+}
 
-  .hero-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(5rem, 16vw, 13rem);
-    line-height: 0.9;
-    letter-spacing: 4px;
-    color: white;
-  }
-  .hero-title span { color: var(--red); }
+/* Big side text */
+.hero-side-text {
+  position: absolute;
+  right: -20px;
+  top: 50%;
+  transform: translateY(-50%) rotate(90deg);
+  transform-origin: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 10rem;
+  color: rgba(255,255,255,0.025);
+  letter-spacing: 10px;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
 
-  .hero-sub {
-    margin-top: 24px;
-    font-size: 1.15rem;
-    color: rgba(255,255,255,0.55);
-    font-weight: 500;
-    letter-spacing: 1px;
-  }
+.hero-content {
+  position: relative;
+  text-align: center;
+  padding: 0 24px;
+  max-width: 900px;
+}
 
-  .hero-email {
-    margin-top: 12px;
-    font-size: 0.9rem;
-    color: rgba(255,255,255,0.35);
-    letter-spacing: 1px;
-  }
-  .hero-email a {
-    color: var(--yellow);
-    text-decoration: none;
-    font-weight: 600;
-  }
-  .hero-email a:hover { text-decoration: underline; }
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 36px;
+  animation: fadeSlideDown 1s cubic-bezier(0.16,1,0.3,1) both;
+}
+.hero-eyebrow-line {
+  width: 40px; height: 1px;
+  background: var(--gold);
+}
+.hero-eyebrow-text {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
 
-  .hero-cta {
-    display: inline-block;
-    margin-top: 44px;
-    background: var(--red);
-    color: white;
-    font-weight: 700;
-    font-size: 0.9rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    padding: 16px 44px;
-    text-decoration: none;
-    border-radius: 3px;
-    transition: background 0.2s, transform 0.15s;
-  }
-  .hero-cta:hover { background: var(--dark-red); transform: translateY(-2px); }
+.hero-name {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: clamp(4.5rem, 13vw, 11rem);
+  line-height: 0.92;
+  color: white;
+  animation: fadeSlideUp 1s 0.1s cubic-bezier(0.16,1,0.3,1) both;
+}
+.hero-name .line2 {
+  display: block;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(255,255,255,0.25);
+  font-style: italic;
+}
 
-  .hero-scroll {
-    position: absolute;
-    bottom: 36px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    color: rgba(255,255,255,0.3);
-    font-size: 0.7rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    animation: bounce 2s infinite;
-  }
-  .hero-scroll::after {
-    content: '';
-    width: 1px;
-    height: 40px;
-    background: rgba(255,255,255,0.2);
-  }
+.hero-divider {
+  width: 60px; height: 2px;
+  background: linear-gradient(90deg, var(--red), var(--gold));
+  margin: 32px auto;
+  animation: fadeSlideUp 1s 0.25s cubic-bezier(0.16,1,0.3,1) both;
+}
 
-  /* ── SHARED SECTION ── */
-  .section-wrap {
-    padding: 110px 48px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
+.hero-sub {
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--muted);
+  letter-spacing: 1.5px;
+  animation: fadeSlideUp 1s 0.35s cubic-bezier(0.16,1,0.3,1) both;
+}
 
-  .section-label {
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--red);
-    margin-bottom: 14px;
-  }
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 48px;
+  animation: fadeSlideUp 1s 0.5s cubic-bezier(0.16,1,0.3,1) both;
+}
 
-  .section-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(2.8rem, 6vw, 5rem);
-    line-height: 1;
-    letter-spacing: 2px;
-    margin-bottom: 48px;
-  }
+.btn-primary {
+  display: inline-block;
+  padding: 15px 44px;
+  background: var(--red);
+  color: white;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0 0 0 rgba(212,34,14,0);
+}
+.btn-primary:hover {
+  background: var(--red2);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(212,34,14,0.35);
+}
 
-  .full-divider {
-    width: 100%;
-    height: 1px;
-    background: rgba(255,255,255,0.07);
-  }
+.btn-ghost {
+  display: inline-block;
+  padding: 14px 40px;
+  border: 1px solid rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.65);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: border-color 0.2s, color 0.2s, transform 0.2s;
+}
+.btn-ghost:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  transform: translateY(-2px);
+}
 
-  /* ── ABOUT ── */
-  #about { background: var(--black); }
+/* Scroll indicator */
+.hero-scroll {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255,255,255,0.2);
+  font-size: 0.65rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  animation: fadeSlideUp 1s 0.8s both, scrollPulse 2.5s 1.8s infinite;
+}
+.hero-scroll::after {
+  content: '';
+  width: 1px; height: 50px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.2), transparent);
+}
 
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: center;
-  }
+/* ─── DIVIDER ─── */
+.divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+}
 
-  .about-visual {
-    position: relative;
-    height: 420px;
-    background: var(--off-black);
-    border-radius: 4px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+/* ─── SECTION BASE ─── */
+.section-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 120px 60px;
+}
 
-  .about-visual-emoji {
-    font-size: 9rem;
-    filter: drop-shadow(0 20px 60px rgba(232,32,10,0.4));
-    animation: float 4s ease-in-out infinite;
-  }
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.eyebrow-line { width: 30px; height: 1px; background: var(--red); }
+.eyebrow-text {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--red);
+}
 
-  .about-visual-glow {
-    position: absolute;
-    width: 300px; height: 300px;
-    background: radial-gradient(circle, rgba(232,32,10,0.25), transparent 70%);
-    border-radius: 50%;
-  }
+.section-heading {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: clamp(2.8rem, 5vw, 5rem);
+  line-height: 1.0;
+  letter-spacing: -0.5px;
+  margin-bottom: 48px;
+  color: white;
+}
+.section-heading em {
+  font-style: italic;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255,255,255,0.3);
+}
 
-  .about-text p {
-    color: rgba(255,255,255,0.6);
-    font-size: 1rem;
-    line-height: 1.8;
-    margin-bottom: 16px;
-    max-width: 100%;
-  }
+/* ─── ABOUT ─── */
+#about { background: var(--black); }
 
-  .about-stats {
-    display: flex;
-    gap: 40px;
-    margin-top: 40px;
-  }
+.about-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 80px;
+  align-items: center;
+}
 
-  .stat-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 3rem;
-    color: var(--yellow);
-    line-height: 1;
-  }
+.about-visual-wrap {
+  position: relative;
+}
 
-  .stat-label {
-    font-size: 0.75rem;
-    color: var(--gray);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-top: 4px;
-  }
+.about-visual {
+  width: 100%;
+  aspect-ratio: 3/4;
+  background: var(--panel);
+  position: relative;
+  overflow: hidden;
+}
 
-  /* ── BURKENS ── */
-  #burkens { background: #0d0000; }
+/* Decorative corner lines */
+.about-visual::before, .about-visual::after {
+  content: '';
+  position: absolute;
+  width: 40px; height: 40px;
+  border-color: var(--gold);
+  border-style: solid;
+  z-index: 2;
+}
+.about-visual::before { top: 16px; left: 16px; border-width: 1px 0 0 1px; }
+.about-visual::after  { bottom: 16px; right: 16px; border-width: 0 1px 1px 0; }
 
-  .burkens-card {
-    background: var(--off-black);
-    padding: 60px 48px;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 40px;
-    position: relative;
-    overflow: hidden;
-  }
+.about-visual-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(ellipse at 40% 40%, rgba(212,34,14,0.15), transparent 60%),
+    radial-gradient(ellipse at 70% 80%, rgba(201,168,76,0.08), transparent 50%),
+    var(--panel);
+}
 
-  .burkens-card::before {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0;
-    width: 100%; height: 3px;
-    background: var(--red);
-  }
+.about-monogram {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 12rem;
+  color: rgba(255,255,255,0.04);
+  line-height: 1;
+  user-select: none;
+}
 
-  .burkens-card-text h3 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 3rem;
-    letter-spacing: 2px;
-    margin-bottom: 12px;
-  }
+/* Floating accent tag */
+.about-accent-tag {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  background: var(--red);
+  padding: 20px 28px;
+  z-index: 3;
+}
+.about-accent-tag .num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: white;
+  line-height: 1;
+}
+.about-accent-tag .lbl {
+  font-size: 0.62rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  margin-top: 2px;
+}
 
-  .burkens-card-text p {
-    color: rgba(255,255,255,0.55);
-    font-size: 1rem;
-    line-height: 1.7;
-    max-width: 500px;
-  }
+.about-body p {
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.9;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 16px;
+}
 
-  .burkens-emoji {
-    font-size: 7rem;
-    filter: drop-shadow(0 10px 40px rgba(232,32,10,0.35));
-    animation: float 4s ease-in-out infinite;
-    flex-shrink: 0;
-  }
+.about-stats {
+  display: flex;
+  gap: 0;
+  margin-top: 48px;
+  border-top: 1px solid var(--border);
+}
 
-  .burker-shop-btn {
-    display: inline-block;
-    margin-top: 28px;
-    background: var(--red);
-    color: white;
-    font-weight: 700;
-    font-size: 0.9rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    padding: 16px 44px;
-    text-decoration: none;
-    border-radius: 3px;
-    transition: background 0.2s, transform 0.15s;
-  }
-  .burker-shop-btn:hover { background: var(--dark-red); transform: translateY(-2px); }
+.about-stat {
+  flex: 1;
+  padding: 28px 0 0;
+  border-right: 1px solid var(--border);
+  padding-right: 28px;
+  margin-right: 28px;
+}
+.about-stat:last-child { border-right: none; padding-right: 0; margin-right: 0; }
 
-  /* ── MERCH ── */
-  #merch { background: var(--black); }
+.stat-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--gold);
+  line-height: 1;
+}
+.stat-lbl {
+  font-size: 0.68rem;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  margin-top: 6px;
+}
 
-  .merch-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 2px;
-  }
+/* ─── BURKENS ─── */
+#burkens {
+  background: var(--deep);
+  position: relative;
+  overflow: hidden;
+}
 
-  .merch-card {
-    background: var(--off-black);
-    padding: 40px 32px;
-    position: relative;
-    overflow: hidden;
-    transition: background 0.25s;
-  }
+#burkens::before {
+  content: 'BURKENS';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22vw;
+  color: rgba(255,255,255,0.02);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: 10px;
+}
 
-  .merch-card::before {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0;
-    width: 0; height: 3px;
-    background: var(--red);
-    transition: width 0.35s ease;
-  }
+.burkens-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  margin-top: 0;
+}
 
-  .merch-card:hover { background: #222; }
-  .merch-card:hover::before { width: 100%; }
+.burkens-panel {
+  background: var(--panel);
+  padding: 60px 52px;
+  position: relative;
+  overflow: hidden;
+}
 
-  .merch-card h3 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.8rem;
-    letter-spacing: 1px;
-    margin-bottom: 8px;
-  }
+.burkens-panel::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 3px;
+  background: linear-gradient(90deg, var(--red), transparent);
+}
 
-  .merch-price {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.2rem;
-    color: var(--yellow);
-    letter-spacing: 1px;
-    margin-bottom: 20px;
-  }
+.burkens-panel.highlight {
+  background: var(--red);
+}
+.burkens-panel.highlight::after { background: rgba(0,0,0,0.2); }
 
-  .merch-btn {
-    padding: 10px 24px;
-    background: var(--red);
-    border: none;
-    color: white;
-    cursor: pointer;
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    border-radius: 2px;
-    transition: background 0.2s;
-  }
-  .merch-btn:hover { background: var(--dark-red); }
+.burkens-panel h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: white;
+}
+.burkens-panel.highlight h3 { color: white; }
 
-  /* ── FOOTER ── */
-  footer {
-    background: var(--off-black);
-    border-top: 1px solid rgba(255,255,255,0.06);
-    padding: 50px 48px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+.burkens-panel p {
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.55);
+}
+.burkens-panel.highlight p { color: rgba(255,255,255,0.8); }
 
-  .footer-logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2rem;
-    color: var(--yellow);
-    letter-spacing: 2px;
-  }
+.burkens-shop-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 36px;
+  padding: 14px 36px;
+  background: white;
+  color: var(--black);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: background 0.2s, transform 0.2s;
+}
+.burkens-shop-link:hover { background: var(--gold2); transform: translateY(-2px); }
+.burkens-shop-link svg { width:14px; height:14px; flex-shrink:0; }
 
-  .footer-contact {
-    text-align: center;
-    color: rgba(255,255,255,0.5);
-    font-size: 0.85rem;
-    line-height: 2;
-  }
-  .footer-contact strong {
-    display: block;
-    color: white;
-    font-size: 0.75rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-  .footer-contact a {
-    color: var(--yellow);
-    text-decoration: none;
-  }
+.burkens-number {
+  position: absolute;
+  bottom: 20px;
+  right: 28px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 7rem;
+  color: rgba(255,255,255,0.06);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+.burkens-panel.highlight .burkens-number { color: rgba(255,255,255,0.12); }
 
-  .footer-right {
-    text-align: right;
-    color: rgba(255,255,255,0.3);
-    font-size: 0.8rem;
-    line-height: 2;
-  }
+/* ─── MERCH ─── */
+#merch { background: var(--black); }
 
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes bounce {
-    0%, 100% { transform: translateX(-50%) translateY(0); }
-    50%       { transform: translateX(-50%) translateY(8px); }
-  }
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50%       { transform: translateY(-16px); }
-  }
+.merch-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+}
 
-  /* ── RESPONSIVE ── */
-  @media (max-width: 768px) {
-    nav { padding: 16px 24px; }
-    .nav-links { gap: 20px; }
-    .section-wrap { padding: 80px 24px; }
-    .about-grid { grid-template-columns: 1fr; gap: 40px; }
-    .about-visual { height: 260px; }
-    .about-stats { gap: 24px; }
-    .burkens-card { flex-direction: column; text-align: center; padding: 40px 24px; }
-    .burkens-emoji { font-size: 5rem; }
-    footer { flex-direction: column; gap: 28px; text-align: center; }
-    .footer-right { text-align: center; }
-  }
+.merch-card {
+  background: var(--panel);
+  padding: 40px 32px 36px;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s;
+  cursor: pointer;
+}
+
+.merch-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 0;
+  background: var(--gold);
+  transition: height 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+.merch-card:hover { background: #161616; }
+.merch-card:hover::before { height: 100%; }
+
+.merch-card-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.15);
+  letter-spacing: 2px;
+  margin-bottom: 32px;
+}
+
+.merch-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 6px;
+}
+
+.merch-price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  color: var(--gold);
+  letter-spacing: 1px;
+  margin-bottom: 28px;
+}
+
+.merch-buy {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.55);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+.merch-buy:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--deep);
+  border-top: 1px solid var(--border);
+  padding: 70px 60px;
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 40px;
+}
+
+.footer-logo {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 1.8rem;
+  color: white;
+}
+.footer-logo span { color: var(--gold); font-style: italic; }
+
+.footer-center {
+  text-align: center;
+}
+.footer-center a {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 300;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.4);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-center a:hover { color: var(--gold); }
+.footer-center .footer-divider-dot {
+  display: inline-block;
+  width: 4px; height: 4px;
+  background: var(--red);
+  border-radius: 50%;
+  margin: 12px auto;
+}
+
+.footer-right {
+  text-align: right;
+  font-size: 0.72rem;
+  font-weight: 300;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.2);
+  line-height: 2;
+}
+
+.footer-bottom {
+  max-width: 1200px;
+  margin: 48px auto 0;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-bottom span {
+  font-size: 0.68rem;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.15);
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeSlideDown {
+  from { opacity:0; transform: translateY(-20px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+@keyframes fadeSlideUp {
+  from { opacity:0; transform: translateY(24px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity:0.3; transform: translateX(-50%) translateY(0); }
+  50%       { opacity:0.6; transform: translateX(-50%) translateY(6px); }
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+  nav { padding: 18px 28px; }
+  nav.scrolled { padding: 12px 28px; }
+  .nav-links { gap: 22px; }
+  .section-wrap { padding: 80px 28px; }
+  .about-layout { grid-template-columns: 1fr; gap: 60px; }
+  .about-visual { aspect-ratio: 16/9; }
+  .about-accent-tag { bottom: -16px; right: -8px; }
+  .burkens-inner { grid-template-columns: 1fr; }
+  .merch-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-inner { grid-template-columns: 1fr; text-align: center; }
+  .footer-right { text-align: center; }
+  .footer-bottom { flex-direction: column; gap: 10px; }
+}
+
+@media (max-width: 560px) {
+  .hero-name { font-size: clamp(3.5rem, 18vw, 6rem); }
+  .hero-actions { flex-direction: column; }
+  .merch-grid { grid-template-columns: 1fr; }
+  .nav-links { gap: 14px; }
+}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">Darrel Burke</div>
+<!-- ─── NAV ─── -->
+<nav id="mainNav">
+  <div class="nav-logo">Darrel <span>Burke</span></div>
   <div class="nav-links">
     <a href="#home">Home</a>
     <a href="#about">About</a>
     <a href="#burkens">Burkens</a>
     <a href="#merch">Merch</a>
+    <a href="https://killerm0nkey182.github.io/Rankings/" target="_blank" style="color:var(--gold); border-bottom:none;">Rankings</a>
   </div>
 </nav>
 
-<!-- HERO -->
-<div id="home">
-  <div class="hero-bg"></div>
-  <div class="hero-content">
-    <div class="hero-tag">Official Website</div>
-    <div class="hero-title">DARREL<br><span>BURKE</span></div>
-    <p class="hero-sub">Welcome to the official site of Darrel Burke.</p>
-    <p class="hero-email">Contact: <a href="mailto:darrel.burke@email.com">darrel.burke@email.com</a></p>
-    <a href="#about" class="hero-cta">Learn More</a>
+<!-- ─── HERO ─── -->
+<section id="home">
+  <div class="hero-layers">
+    <div class="hl-1"></div>
+    <div class="hl-2"></div>
+    <div class="hl-3"></div>
   </div>
+  <div class="hero-side-text">BURKE</div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="hero-eyebrow-line"></div>
+      <div class="hero-eyebrow-text">Official Website</div>
+      <div class="hero-eyebrow-line"></div>
+    </div>
+
+    <div class="hero-name">
+      Darrel
+      <span class="line2">Burke</span>
+    </div>
+
+    <div class="hero-divider"></div>
+    <p class="hero-sub">The Official Online Presence</p>
+
+    <div class="hero-actions">
+      <a href="#about" class="btn-primary">Discover More</a>
+      <a href="mailto:darrel.burke@email.com" class="btn-ghost">Get in Touch</a>
+    </div>
+  </div>
+
   <div class="hero-scroll">Scroll</div>
-</div>
+</section>
 
-<div class="full-divider"></div>
+<div class="divider"></div>
 
-<!-- ABOUT -->
-<div id="about">
+<!-- ─── ABOUT ─── -->
+<section id="about">
   <div class="section-wrap">
-    <div class="about-grid">
-      <div class="about-visual">
-        <div class="about-visual-glow"></div>
-        <div class="about-visual-emoji">🎤</div>
-      </div>
-      <div class="about-text">
-        <div class="section-label">Who He Is</div>
-        <div class="section-title">ABOUT<br>DARREL</div>
-        <p>This is the official online presence of Darrel Burke.</p>
-        <div class="about-stats">
-          <div>
-            <div class="stat-num">∞</div>
-            <div class="stat-label">Energy</div>
+    <div class="about-layout">
+
+      <div class="about-visual-wrap reveal">
+        <div class="about-visual">
+          <div class="about-visual-inner">
+            <div class="about-monogram">DB</div>
           </div>
-          <div>
-            <div class="stat-num">1</div>
-            <div class="stat-label">One & Only</div>
-          </div>
-          <div>
-            <div class="stat-num">7</div>
-            <div class="stat-label">Days a Week</div>
+          <div class="about-accent-tag">
+            <div class="num">No.1</div>
+            <div class="lbl">One & Only</div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
 
-<div class="full-divider"></div>
+      <div class="about-body">
+        <div class="eyebrow reveal">
+          <div class="eyebrow-line"></div>
+          <div class="eyebrow-text">Who He Is</div>
+        </div>
+        <div class="section-heading reveal reveal-delay-1">
+          About<br><em>Darrel</em>
+        </div>
+        <p class="reveal reveal-delay-2">
+          This is the official online presence of Darrel Burke — the hub for everything Burkens, merch, events, and more.
+        </p>
+        <p class="reveal reveal-delay-2">
+          Stay tuned for updates, drops, and announcements.
+        </p>
 
-<!-- BURKENS -->
-<div id="burkens">
-  <div class="section-wrap">
-    <div class="section-label">Live Events</div>
-    <div class="section-title">BURKENS</div>
-    <div class="burkens-card">
-      <div class="burkens-card-text">
-        <h3>Burkens Every Day</h3>
-        <p>Burkens happen every day at different places for now. Stay tuned for locations and updates. You won't want to miss it.</p>
-        <a class="burker-shop-btn" href="https://killerm0nkey182.github.io/Burker_Burgers/" target="_blank">🍔 Visit Burker Shop</a>
+        <div class="about-stats reveal reveal-delay-3">
+          <div class="about-stat">
+            <div class="stat-val">∞</div>
+            <div class="stat-lbl">Energy</div>
+          </div>
+          <div class="about-stat">
+            <div class="stat-val">01</div>
+            <div class="stat-lbl">One & Only</div>
+          </div>
+          <div class="about-stat">
+            <div class="stat-val">7</div>
+            <div class="stat-lbl">Days a Week</div>
+          </div>
+        </div>
       </div>
-      <div class="burkens-emoji">🎉</div>
+
     </div>
   </div>
-</div>
+</section>
 
-<div class="full-divider"></div>
+<div class="divider"></div>
 
-<!-- MERCH -->
-<div id="merch">
+<!-- ─── BURKENS ─── -->
+<section id="burkens">
+  <div class="section-wrap" style="padding-bottom:60px;">
+    <div class="eyebrow reveal">
+      <div class="eyebrow-line"></div>
+      <div class="eyebrow-text">Live Events</div>
+    </div>
+    <div class="section-heading reveal reveal-delay-1">Burkens</div>
+  </div>
+
+  <div class="burkens-inner">
+    <div class="burkens-panel reveal">
+      <h3>Every Day,<br>Everywhere</h3>
+      <p>Burkens happen every day at different places. Stay tuned for locations, times, and announcements. You won't want to miss it.</p>
+      <div class="burkens-number">01</div>
+    </div>
+
+    <div class="burkens-panel highlight reveal reveal-delay-1">
+      <h3>Burker Shop</h3>
+      <p>The official Burker Burgers shop — home of the best burgers around. Check the menu, see events, and find out what's cooking.</p>
+      <a class="burkens-shop-link" href="https://killerm0nkey182.github.io/Burker_Burgers/" target="_blank">
+        Visit Burker Shop
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+        </svg>
+      </a>
+      <div class="burkens-number">02</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ─── MERCH ─── -->
+<section id="merch">
   <div class="section-wrap">
-    <div class="section-label">Official Collection</div>
-    <div class="section-title">BURKER<br>MERCH</div>
+    <div class="eyebrow reveal">
+      <div class="eyebrow-line"></div>
+      <div class="eyebrow-text">Official Collection</div>
+    </div>
+    <div class="section-heading reveal reveal-delay-1">Burker<br><em>Merch</em></div>
+
     <div class="merch-grid">
 
-      <div class="merch-card">
+      <div class="merch-card reveal reveal-delay-1">
+        <div class="merch-card-num">01</div>
         <h3>Shirt</h3>
         <div class="merch-price">$19.99</div>
-        <button class="merch-btn" onclick="alert('Added (demo)')">Buy Now</button>
+        <button class="merch-buy" onclick="alert('Added (demo)')">
+          Buy Now
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </button>
       </div>
 
-      <div class="merch-card">
+      <div class="merch-card reveal reveal-delay-2">
+        <div class="merch-card-num">02</div>
         <h3>Hoodie</h3>
         <div class="merch-price">$29.99</div>
-        <button class="merch-btn" onclick="alert('Added (demo)')">Buy Now</button>
+        <button class="merch-buy" onclick="alert('Added (demo)')">
+          Buy Now
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </button>
       </div>
 
-      <div class="merch-card">
+      <div class="merch-card reveal reveal-delay-3">
+        <div class="merch-card-num">03</div>
         <h3>Hat</h3>
         <div class="merch-price">$9.99</div>
-        <button class="merch-btn" onclick="alert('Added (demo)')">Buy Now</button>
+        <button class="merch-buy" onclick="alert('Added (demo)')">
+          Buy Now
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </button>
       </div>
 
-      <div class="merch-card">
+      <div class="merch-card reveal reveal-delay-4">
+        <div class="merch-card-num">04</div>
         <h3>Tiger Tubes</h3>
         <div class="merch-price">$59.99</div>
-        <button class="merch-btn" onclick="alert('Added (demo)')">Buy Now</button>
+        <button class="merch-buy" onclick="alert('Added (demo)')">
+          Buy Now
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </button>
       </div>
 
     </div>
   </div>
-</div>
+</section>
 
-<!-- FOOTER -->
+<!-- ─── FOOTER ─── -->
 <footer>
-  <div class="footer-logo">Darrel Burke</div>
-  <div class="footer-contact">
-    <strong>Get In Touch</strong>
-    <a href="mailto:darrel.burke@email.com">darrel.burke@email.com</a>
+  <div class="footer-inner">
+    <div class="footer-logo">Darrel <span>Burke</span></div>
+    <div class="footer-center">
+      <a href="mailto:darrel.burke@email.com">darrel.burke@email.com</a>
+      <div class="footer-divider-dot"></div>
+      <a href="https://killerm0nkey182.github.io/Rankings/" target="_blank">View Rankings</a>
+    </div>
+    <div class="footer-right">
+      Official Website<br>
+      All Rights Reserved
+    </div>
   </div>
-  <div class="footer-right">
-    Official Website<br>
-    All rights reserved
+  <div class="footer-bottom">
+    <span>Darrel Burke &copy; 2025</span>
+    <span>Built for the Burker Crew</span>
   </div>
 </footer>
 
+<script>
+  // Nav scroll effect
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+  revealEls.forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
